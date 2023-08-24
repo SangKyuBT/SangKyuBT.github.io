@@ -2,7 +2,8 @@
 layout: post
 title: 웹팩을 활용한 리액트 프로젝트 구성 - 빌드 시스템 이해와 초기 설정
 date: 2023-08-07 18:47:00 +0900
-categories: [Developer, Tutorial]
+categories: [Developer, React]
+tags: [Webpack, React, Babel]
 published: true
 ---
 
@@ -46,7 +47,7 @@ CRA(create-react-app)는 리액트(React) 애플리케이션을 쉽고 빠르게
 ## 초기 구성
 ---
 
-#### 1. 프로젝트 초기화 및 웹팩 패키지 설치
+### 1. 프로젝트 초기화 및 웹팩 패키지 설치
 웹팩 패키지를 설치한다. 프로젝트 디렉토리에서 다음 명령어를 입력한다.
 
 ```console
@@ -58,7 +59,7 @@ npm i webpack -D
 
 <br/>
 
-#### 2. 웹팩 설정 파일 생성
+### 2. 웹팩 설정 파일 생성
 웹팩의 동작 방식과 빌드 옵션을 제어하는 파일이다. 일반적으로 webpack-cli를 사용하여 루트 디렉토리에 있지만 우리는 webpack-cli 없이 별도의 빌드 스크립트를 작성할 것이기 때문에 config 디렉토리로 분리하였다. 자세한 설명은 [여기](https://webpack.kr/configuration/)를 참고 바란다.
 
 - /config/webpack.config.js
@@ -119,7 +120,7 @@ module.exports = ( webpackEnv ) => {
 
 <br/>
 
-#### 3. 바벨 패키지 설치
+### 3. 바벨 패키지 설치
 바벨은 최신 자바스크립트을 구형 브라우저에서도 호환되게 하거나, 리액트의 JSX의 문법을 브라우저에서 실행가능한 파일로 변경한다.
 웹팩 빌드 시 작성한 자바스크립트 파일을 읽어와 바벨을 통해 변환한 후 결과를 번들에 포함시키도록 해야한다. 다음 명령어를 입력한다.
 ```console
@@ -133,7 +134,7 @@ npm i babel-loader @babel/core @babel/preset-env @babel/preset-react -D
 
 <br/>
 
-#### 4. 바벨 설정 파일 생성
+### 4. 바벨 설정 파일 생성
 프로젝트에서 사용하는 바벨 설정 파일이다. 필요한 프리셋과 플러그인을 설정한다. 자세한 설정 방법은 [여기](https://babeljs.io/docs/configuration)를 참고바란다.
 
 ```js
@@ -153,7 +154,7 @@ module.exports = {
 
 <br/>
 
-#### 5. HTMLWebpackPlugin 패키지 설치 및 설정
+### 5. HTMLWebpackPlugin 패키지 설치 및 설정
 웹팩에서 html파일을 생성하고 관리하기 위한 플러그인이다. 다음 명령어를 입력하고 웹팩 설정 파일을 수정한다.
 
 ```console
@@ -181,7 +182,7 @@ module.exports = ( webpackEnv ) => {
 
 <br/>
 
-#### 6. 환경 변수 설정
+### 6. 환경 변수 설정
 애플리케이션의 환경 변수를 설정한다. 웹팩 설정 파일을 수정한다.
 
 - /config/webpack.config.js
@@ -207,7 +208,7 @@ module.exports = ( webpackEnv ) => {
 
 <br/>
 
-#### 7. index.html 생성
+### 7. index.html 생성
 브라우저가 처음으로 로딩할 때 보여지는 페이지의 기본 구조를 정의하고, 리액트가 UI를 구성할 HTML를 생성한다. 웹팩 설정에 추가한 HTMLWebpackPlugin은 이를 사용하여 웹팩의 빌드 결과물을 연결하고 있는 HTML를 생성할 것 이다. 
 
 - /public/index.html
@@ -234,7 +235,7 @@ module.exports = ( webpackEnv ) => {
 
 <br/>
 
-#### 8. 리액트 패키지 설치
+### 8. 리액트 패키지 설치
 리액트 패키지를 설치한다. 다음 명령어를 입력한다.
 
 ```console
@@ -243,7 +244,7 @@ npm i react react-dom
 
 <br/>
 
-#### 9. index.js 생성
+### 9. index.js 생성
 웹팩 설정 파일에 주입한 프로젝트 진입점(entry point) 파일이며, 리액트가 컴포넌트를 실제로 DOM에 렌더링할 곳이다. 
 
 - /src/index.js
@@ -281,7 +282,7 @@ export default App
 
 <br/>
 
-#### 10. 빌드 스크립트 생성
+### 10. 빌드 스크립트 생성
 웹팩 빌드를 실행시킬 스크립트를 생성한다.
 
 - /scripts/build.js
@@ -304,7 +305,7 @@ webpack( webpackConfig, ( err, stats ) => {
 
 <br/>
 
-#### 11. 빌드 명령어 추가
+### 11. 빌드 명령어 추가
 package.json에 다음 명령을 추가한다.
 
 - /package.json
@@ -319,7 +320,7 @@ package.json에 다음 명령을 추가한다.
 
 <br/>
 
-#### 12. 빌드 실행
+### 12. 빌드 실행
 빌드를 실행하고 결과를 확인한다. 다음 명령어를 입력한다.
 
 ```console
@@ -335,7 +336,7 @@ npm run build
 ## 개발 서버 구성
 ---
 
-#### 1. 개발 서버 패키지 설치 및 설정
+### 1. 개발 서버 패키지 설치 및 설정
 웹팩에서 제공하는 개발 서버 패키지를 설치한다. 다음 명령을 입력하고, 개발 서버 웹팩 설정 파일을 생성한다.
 
 ```console
@@ -362,7 +363,7 @@ module.exports = {
 
 <br/>
 
-#### 2. 개발 서버 실행 스크립트 생성
+### 2. 개발 서버 실행 스크립트 생성
 개발 서버를 실행 시킬 스크립트를 생성한다.
 - /scripts/devServer.js
 
@@ -388,7 +389,7 @@ server.startCallback( ( err ) => {
 
 <br/>
 
-#### 3. 개발 서버 실행 명령 추가
+### 3. 개발 서버 실행 명령 추가
 package.json에 다음 명령을 추가한다.
 - /package.json
 
@@ -403,7 +404,7 @@ package.json에 다음 명령을 추가한다.
 
 <br/>
 
-#### 4. 개발 서버 실행
+### 4. 개발 서버 실행
 웹팩 개발 서버를 실행하여 localhost:3000으로 접속하면 실시간으로 변경된 내용을 확인 할 수 있다. 다음 명령어를 입력한다. 
 ```
 npm run dev
@@ -416,7 +417,7 @@ npm run dev
 ---
 웹팩은 기본적으로 자바스크립트 모듈 번들러이기 때문에 다른 유형의 파일을 자동적으로 로드하지 못 한다. 따라서 정적 리소스를 사용하기 위해서는 별도의 설정이 필요하다. 
 
-#### 1. CSS 스타일 패키지 설치
+### 1. CSS 스타일 패키지 설치
 CSS를 웹팩에서 처리하기 위해서는 해당 로더와 플러그인이 필요하다. 아래의 명령어를 입력해 패키지를 설치한다.
 ```
 npm i style-loader css-loader mini-css-extract-plugin -D
@@ -427,7 +428,7 @@ npm i style-loader css-loader mini-css-extract-plugin -D
 
 <br/>
 
-#### 2. CSS 로더 설정 
+### 2. CSS 로더 설정 
 우리는 CSS 파일을 css-loader로 읽어 자바스크립트로 변환하여 모듈로 번들에 포함시켜야한다. 번들에 포함된 CSS 모듈을 개발 환경에서는 `<style>` 태그로, 프로덕션 환경에서는 별도의 CSS 파일로 추출 후 `<link>` 태그로 HTML에 주입해야한다. 웹팩 설정을 아래와 같이 변경한다.
 
 - /config/webpack.config.js
@@ -464,7 +465,7 @@ module.exports = ( webpackEnv ) => {
 
 <br/>
 
-#### 3. index.css 생성 및 적용
+### 3. index.css 생성 및 적용
 적용할 CSS를 생성하고 적용 한 뒤 결과를 확인한다.
 
 - src/index.css
@@ -492,7 +493,7 @@ import App from './app'
 
 <br/>
 
-#### 4. 웹 폰트, 이미지 로더 설정
+### 4. 웹 폰트, 이미지 로더 설정
 웹팩 5는 웹 폰트, 이미지와 같은 정적 리소스를 읽어오는 Asset Module 기능을 제공한다. 아래와 같이 웹팩 설정을 수정한다. 자세한 설명은 [여기](https://webpack.kr/guides/asset-modules/)를 참고 바란다.
 
 - /config/webpack.config.js
