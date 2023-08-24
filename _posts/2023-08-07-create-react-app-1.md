@@ -185,6 +185,7 @@ module.exports = ( webpackEnv ) => {
 애플리케이션의 환경 변수를 설정한다. 웹팩 설정 파일을 수정한다.
 
 - /config/webpack.config.js
+
 ```js
 const webpack = require('webpack')
 ...
@@ -208,6 +209,7 @@ module.exports = ( webpackEnv ) => {
 
 #### 7. index.html 생성
 브라우저가 처음으로 로딩할 때 보여지는 페이지의 기본 구조를 정의하고, 리액트가 UI를 구성할 HTML를 생성한다. 웹팩 설정에 추가한 HTMLWebpackPlugin은 이를 사용하여 웹팩의 빌드 결과물을 연결하고 있는 HTML를 생성할 것 이다. 
+
 - /public/index.html
 
 ```html
@@ -243,6 +245,7 @@ npm i react react-dom
 
 #### 9. index.js 생성
 웹팩 설정 파일에 주입한 프로젝트 진입점(entry point) 파일이며, 리액트가 컴포넌트를 실제로 DOM에 렌더링할 곳이다. 
+
 - /src/index.js
 
 ```js
@@ -266,7 +269,6 @@ root.render(
 
 - /src/app.js
 
-
 ```js
 function App() {
   return (
@@ -281,6 +283,7 @@ export default App
 
 #### 10. 빌드 스크립트 생성
 웹팩 빌드를 실행시킬 스크립트를 생성한다.
+
 - /scripts/build.js
 
 ```js
