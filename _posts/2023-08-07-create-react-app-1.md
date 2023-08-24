@@ -2,7 +2,7 @@
 layout: post
 title: 웹팩을 활용한 리액트 프로젝트 구성 - 빌드 시스템 이해와 초기 설정
 date: 2023-08-07 18:47:00 +0900
-categories: react webpack babel 
+categories: [Developer, Tutorial]
 published: true
 ---
 
@@ -49,7 +49,7 @@ CRA(create-react-app)는 리액트(React) 애플리케이션을 쉽고 빠르게
 #### 1. 프로젝트 초기화 및 웹팩 패키지 설치
 웹팩 패키지를 설치한다. 프로젝트 디렉토리에서 다음 명령어를 입력한다.
 
-```
+```console
 mkdir react-app-by-webpack
 cd react-app-by-webpack
 npm init -y 
@@ -63,7 +63,7 @@ npm i webpack -D
 
 - /config/webpack.config.js
 
-```
+```js
 const path = require( 'path' )
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
 
@@ -122,7 +122,7 @@ module.exports = ( webpackEnv ) => {
 #### 3. 바벨 패키지 설치
 바벨은 최신 자바스크립트을 구형 브라우저에서도 호환되게 하거나, 리액트의 JSX의 문법을 브라우저에서 실행가능한 파일로 변경한다.
 웹팩 빌드 시 작성한 자바스크립트 파일을 읽어와 바벨을 통해 변환한 후 결과를 번들에 포함시키도록 해야한다. 다음 명령어를 입력한다.
-```
+```console
 npm i babel-loader @babel/core @babel/preset-env @babel/preset-react -D
 ```
 
@@ -135,7 +135,8 @@ npm i babel-loader @babel/core @babel/preset-env @babel/preset-react -D
 
 #### 4. 바벨 설정 파일 생성
 프로젝트에서 사용하는 바벨 설정 파일이다. 필요한 프리셋과 플러그인을 설정한다. 자세한 설정 방법은 [여기](https://babeljs.io/docs/configuration)를 참고바란다.
-```
+
+```js
 module.exports = {
   presets: [ //플러그인들의 집합인 프리셋을 설정한다. 
     [
@@ -154,12 +155,14 @@ module.exports = {
 
 #### 5. HTMLWebpackPlugin 패키지 설치 및 설정
 웹팩에서 html파일을 생성하고 관리하기 위한 플러그인이다. 다음 명령어를 입력하고 웹팩 설정 파일을 수정한다.
-```
+
+```console
 npm i html-webpack-plugin -D
 ```
+
 - /config/webpack.config.js
 
-```
+```js
 ...
 module.exports = ( webpackEnv ) => {
   ...
@@ -180,7 +183,9 @@ module.exports = ( webpackEnv ) => {
 
 #### 6. 환경 변수 설정
 애플리케이션의 환경 변수를 설정한다. 웹팩 설정 파일을 수정한다.
-```
+
+- /config/webpack.config.js
+```js
 const webpack = require('webpack')
 ...
 module.exports = ( webpackEnv ) => {
@@ -205,7 +210,7 @@ module.exports = ( webpackEnv ) => {
 브라우저가 처음으로 로딩할 때 보여지는 페이지의 기본 구조를 정의하고, 리액트가 UI를 구성할 HTML를 생성한다. 웹팩 설정에 추가한 HTMLWebpackPlugin은 이를 사용하여 웹팩의 빌드 결과물을 연결하고 있는 HTML를 생성할 것 이다. 
 - /public/index.html
 
-```
+```html
 <!DOCTYPE html>
 <html lang="ko-KR">
 
@@ -229,7 +234,8 @@ module.exports = ( webpackEnv ) => {
 
 #### 8. 리액트 패키지 설치
 리액트 패키지를 설치한다. 다음 명령어를 입력한다.
-```
+
+```console
 npm i react react-dom 
 ```
 
@@ -239,7 +245,7 @@ npm i react react-dom
 웹팩 설정 파일에 주입한 프로젝트 진입점(entry point) 파일이며, 리액트가 컴포넌트를 실제로 DOM에 렌더링할 곳이다. 
 - /src/index.js
 
-```
+```js
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
@@ -260,7 +266,8 @@ root.render(
 
 - /src/app.js
 
-```
+
+```js
 function App() {
   return (
     <div className="app">React App 매뉴얼 구성</div>
@@ -276,7 +283,7 @@ export default App
 웹팩 빌드를 실행시킬 스크립트를 생성한다.
 - /scripts/build.js
 
-```
+```js
 const webpack = require('webpack')
 const configFactory = require( '../config/webpack.config' )
 
@@ -299,7 +306,7 @@ package.json에 다음 명령을 추가한다.
 
 - /package.json
 
-```
+```json
 ...
   "scripts": {
     "build": "node scripts/build.js"
@@ -311,9 +318,11 @@ package.json에 다음 명령을 추가한다.
 
 #### 12. 빌드 실행
 빌드를 실행하고 결과를 확인한다. 다음 명령어를 입력한다.
-```
+
+```console
 npm run build
 ```
+
 우리는 웹팩 설정 파일의 output에 dist 폴더안에 빌드된 결과물이 들어가도록 설정하였다. 빌드된 결과물이 dist폴더 안에 생성되었고, 초기 구성이 완료되었다.
 
 ![react_by_webpack_1](/assets/img/posts/react_by_webpack_1.png)
@@ -325,13 +334,14 @@ npm run build
 
 #### 1. 개발 서버 패키지 설치 및 설정
 웹팩에서 제공하는 개발 서버 패키지를 설치한다. 다음 명령을 입력하고, 개발 서버 웹팩 설정 파일을 생성한다.
-```
+
+```console
 npm i webpack-dev-server -D
 ```
 
 - /config/webpackDevServer.config.js
 
-```
+```js
 const path = require( 'path' )
 const appDir = process.cwd()
 const getAbsolutePath = pathDir => path.resolve( appDir, pathDir )
@@ -353,7 +363,7 @@ module.exports = {
 개발 서버를 실행 시킬 스크립트를 생성한다.
 - /scripts/devServer.js
 
-```
+```js
 const webpack = require('webpack')
 const configFactory = require( '../config/webpack.config' )
 const WebpackDevServer = require( 'webpack-dev-server' )
@@ -379,7 +389,7 @@ server.startCallback( ( err ) => {
 package.json에 다음 명령을 추가한다.
 - /package.json
 
-```
+```json
 ...
   "scripts": {
     "dev": "node scripts/devServer.js",
@@ -419,7 +429,7 @@ npm i style-loader css-loader mini-css-extract-plugin -D
 
 - /config/webpack.config.js
 
-```
+```js
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 ...
 module.exports = ( webpackEnv ) => {
@@ -455,16 +465,14 @@ module.exports = ( webpackEnv ) => {
 적용할 CSS를 생성하고 적용 한 뒤 결과를 확인한다.
 
 - src/index.css
-
-```
+```css
 .app {
   color: red;
 }
 ```
 
 - src/index.js
-
-```
+```js
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
@@ -483,8 +491,7 @@ import App from './app'
 웹팩 5는 웹 폰트, 이미지와 같은 정적 리소스를 읽어오는 Asset Module 기능을 제공한다. 아래와 같이 웹팩 설정을 수정한다. 자세한 설명은 [여기](https://webpack.kr/guides/asset-modules/)를 참고 바란다.
 
 - /config/webpack.config.js
-
-```
+```js
 ...
 module.exports = ( webpackEnv ) => {
   ...
