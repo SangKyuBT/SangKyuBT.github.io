@@ -465,6 +465,7 @@ module.exports = ( webpackEnv ) => {
 적용할 CSS를 생성하고 적용 한 뒤 결과를 확인한다.
 
 - src/index.css
+
 ```css
 .app {
   color: red;
@@ -472,6 +473,7 @@ module.exports = ( webpackEnv ) => {
 ```
 
 - src/index.js
+
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom/client'
